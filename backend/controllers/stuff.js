@@ -1,10 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const userRoutes = require('./routes/user');
+const Thing = require('../models/thing');
 
-const Thing = require('./models/thing');
-
-router.post('/', (req, res, next) => {
+exports.createThing = (req, res, next) => {
   const thing = new Thing({
     title: req.body.title,
     description: req.body.description,
@@ -25,9 +21,9 @@ router.post('/', (req, res, next) => {
       });
     }
   );
-});
+};
 
-router.get('/:id', (req, res, next) => {
+exports.getOneThing = (req, res, next) => {
   Thing.findOne({
     _id: req.params.id
   }).then(
@@ -41,9 +37,9 @@ router.get('/:id', (req, res, next) => {
       });
     }
   );
-});
+};
 
-router.put('/:id', (req, res, next) => {
+exports.modifyThing = (req, res, next) => {
   const thing = new Thing({
     _id: req.params.id,
     title: req.body.title,
@@ -65,9 +61,9 @@ router.put('/:id', (req, res, next) => {
       });
     }
   );
-});
+};
 
-router.delete('/:id', (req, res, next) => {
+exports.deleteThing = (req, res, next) => {
   Thing.deleteOne({_id: req.params.id}).then(
     () => {
       res.status(200).json({
@@ -81,10 +77,9 @@ router.delete('/:id', (req, res, next) => {
       });
     }
   );
-});
+};
 
-router.get('/' +
-  '', (req, res, next) => {
+exports.getAllStuff = (req, res, next) => {
   Thing.find().then(
     (things) => {
       res.status(200).json(things);
@@ -96,6 +91,4 @@ router.get('/' +
       });
     }
   );
-});
-
-module.exports = router;
+};
