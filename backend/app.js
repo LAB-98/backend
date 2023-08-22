@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const userRoutes = require('./routes/user');
 
-const Thing = require('./models/thing');
+const Book = require('./models/book');
 
 router.post('/', (req, res, next) => {
-  const thing = new Thing({
+  const book = new Book({
     title: req.body.title,
     description: req.body.description,
     imageUrl: req.body.imageUrl,
     price: req.body.price,
     userId: req.body.userId
   });
-  thing.save().then(
+  book.save().then(
     () => {
       res.status(201).json({
         message: 'Post saved successfully!'
@@ -28,11 +28,11 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Thing.findOne({
+  Book.findOne({
     _id: req.params.id
   }).then(
-    (thing) => {
-      res.status(200).json(thing);
+    (book) => {
+      res.status(200).json(book);
     }
   ).catch(
     (error) => {
@@ -44,7 +44,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  const thing = new Thing({
+  const book = new Book({
     _id: req.params.id,
     title: req.body.title,
     description: req.body.description,
@@ -52,10 +52,10 @@ router.put('/:id', (req, res, next) => {
     price: req.body.price,
     userId: req.body.userId
   });
-  Thing.updateOne({_id: req.params.id}, thing).then(
+  Book.updateOne({_id: req.params.id}, book).then(
     () => {
       res.status(201).json({
-        message: 'Thing updated successfully!'
+        message: 'Book updated successfully!'
       });
     }
   ).catch(
@@ -68,7 +68,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  Thing.deleteOne({_id: req.params.id}).then(
+  Book.deleteOne({_id: req.params.id}).then(
     () => {
       res.status(200).json({
         message: 'Deleted!'
@@ -85,9 +85,9 @@ router.delete('/:id', (req, res, next) => {
 
 router.get('/' +
   '', (req, res, next) => {
-  Thing.find().then(
-    (things) => {
-      res.status(200).json(things);
+  Book.find().then(
+    (books) => {
+      res.status(200).json(books);
     }
   ).catch(
     (error) => {

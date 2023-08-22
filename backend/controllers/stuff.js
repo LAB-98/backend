@@ -1,14 +1,14 @@
-const Thing = require('../models/thing');
+const Book = require('../models/book');
 
-exports.createThing = (req, res, next) => {
-  const thing = new Thing({
+exports.createBook = (req, res, next) => {
+  const book = new Book({
     title: req.body.title,
     description: req.body.description,
     imageUrl: req.body.imageUrl,
     price: req.body.price,
     userId: req.body.userId
   });
-  thing.save().then(
+  book.save().then(
     () => {
       res.status(201).json({
         message: 'Post saved successfully!'
@@ -23,12 +23,12 @@ exports.createThing = (req, res, next) => {
   );
 };
 
-exports.getOneThing = (req, res, next) => {
-  Thing.findOne({
+exports.getOneBook = (req, res, next) => {
+  Book.findOne({
     _id: req.params.id
   }).then(
-    (thing) => {
-      res.status(200).json(thing);
+    (book) => {
+      res.status(200).json(book);
     }
   ).catch(
     (error) => {
@@ -39,8 +39,8 @@ exports.getOneThing = (req, res, next) => {
   );
 };
 
-exports.modifyThing = (req, res, next) => {
-  const thing = new Thing({
+exports.modifyBook = (req, res, next) => {
+  const book = new Book({
     _id: req.params.id,
     title: req.body.title,
     description: req.body.description,
@@ -48,10 +48,10 @@ exports.modifyThing = (req, res, next) => {
     price: req.body.price,
     userId: req.body.userId
   });
-  Thing.updateOne({_id: req.params.id}, thing).then(
+  Book.updateOne({_id: req.params.id}, book).then(
     () => {
       res.status(201).json({
-        message: 'Thing updated successfully!'
+        message: 'Book updated successfully!'
       });
     }
   ).catch(
@@ -63,8 +63,8 @@ exports.modifyThing = (req, res, next) => {
   );
 };
 
-exports.deleteThing = (req, res, next) => {
-  Thing.deleteOne({_id: req.params.id}).then(
+exports.deleteBook = (req, res, next) => {
+  Book.deleteOne({_id: req.params.id}).then(
     () => {
       res.status(200).json({
         message: 'Deleted!'
@@ -80,9 +80,9 @@ exports.deleteThing = (req, res, next) => {
 };
 
 exports.getAllStuff = (req, res, next) => {
-  Thing.find().then(
-    (things) => {
-      res.status(200).json(things);
+  Book.find().then(
+    (books) => {
+      res.status(200).json(books);
     }
   ).catch(
     (error) => {
