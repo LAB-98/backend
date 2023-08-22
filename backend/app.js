@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userRoutes = require('./routes/user');
 
-const Book = require('./models/book');
+const Book = require('./models/books');
 
 router.post('/', (req, res, next) => {
   const book = new Book({
