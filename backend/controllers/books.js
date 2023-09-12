@@ -6,7 +6,7 @@ exports.createBook = (req, res, next) => {
     delete bookObject._id;
     const book = new Book({
         ...bookObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.compressedFilename}`
     });
     book.save()
         .then(() => res.status(201).json({ message: 'Objet enregistré' }))
@@ -17,7 +17,7 @@ exports.modifyBook = (req, res, next) => {
     const bookObject = req.file ? 
         {
           ...JSON.parse(req.body.book),
-          imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+          imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.compressedFilename}`,
         }
       : { ...req.body };
     Book.updateOne({ _id: req.params.id }, { ...bookObject, _id: req.params.id })
@@ -44,7 +44,7 @@ exports.getOneBook = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));
 };
 
-exports.getAllBook = (req, res, next) => {
+exports.getAllBooks = (req, res, next) => {
     Book.find()
         .then(book => res.status(200).json(book))
         .catch(error => res.status(400).json({ error }));
